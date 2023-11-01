@@ -13,7 +13,7 @@ const create = async (req, res) => {
 
     const savedPost = await newPost.save();
 
-    res.status(201).json({post: savedPost});
+    res.status(201).json(savedPost);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -55,7 +55,7 @@ const update = async (req, res) => {
 
     // await post.save();
 
-    return res.status(200).json({ message: "updated post successfully" });
+    return res.status(200).json(post);
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }
@@ -76,7 +76,7 @@ const getPosts = async (req, res) => {
     if (!posts || posts.length === 0)
       return res.status(404).json({ message: "cannot find any post" });
 
-    return res.status(200).json({posts});
+    return res.status(200).json(posts);
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }
@@ -88,7 +88,7 @@ const getPostsOfUser = async (req, res) => {
     const posts = await Post.find({ userId }).sort("-createdAt");
 
     if (!posts || posts.length === 0) res.status(404).json({ message: "no post" });
-    res.status(200).json({posts});
+    res.status(200).json(posts);
   } catch (error) {
     res.status(404).json({ error: error.message });
   }

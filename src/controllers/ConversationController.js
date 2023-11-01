@@ -9,7 +9,7 @@ const create = async (req, res) => {
     });
 
     const savedConversation = await newConversation.save();
-    res.status(201).json({conversation: savedConversation});
+    res.status(201).json(savedConversation);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -29,7 +29,7 @@ const update = async (req, res) => {
 
     await conversation.save();
 
-    res.status(201).json({message: "update successful"});
+    res.status(200).json({message: "update successful"});
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -59,7 +59,7 @@ const getList = async (req, res) => {
     if (!conversations)
       return res.status(204).json({ message: "no conversation is gotten" });
     
-    res.status(200).json({conversations});
+    res.status(200).json(conversations);
 
   } catch (error) {
     res.status(500).json({ error: error.message });

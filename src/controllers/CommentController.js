@@ -12,7 +12,7 @@ const create = async (req, res) => {
 
     await comment.save();
 
-    res.status(201).json({ comment });
+    res.status(201).json(comment);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -24,7 +24,7 @@ const getCommentsByPost = async (req, res) => {
 
     const comments = await Comment.find({ postId }).sort("-createdAt");
 
-    res.status(200).json({comments});
+    res.status(200).json(comments);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

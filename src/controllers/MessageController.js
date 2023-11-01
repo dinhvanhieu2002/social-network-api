@@ -12,7 +12,7 @@ const create = async (req, res) => {
     });
 
     const savedMessage = await newMessage.save();
-    res.status(201).json({newMessage: savedMessage});
+    res.status(201).json(savedMessage);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -24,7 +24,7 @@ const getMessagesOfConversation = async (req, res) => {
     const messages = await Message.find({
       conversationId
     });
-    res.status(200).json({messages});
+    res.status(200).json(messages);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
