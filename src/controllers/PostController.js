@@ -107,29 +107,46 @@ const getPostsOfUser = async (req, res) => {
   }
 };
 
-const reaction = async (req, res) => {
+const likePost = async (req, res) => {
   try {
     const { postId } = req.params;
     const loggedUser = req.user;
-    let message;
 
     const post = await Post.findById(postId);
 
+    post.reactions = [...post.reactions, loggedUser];
+    post.likeCount++;
     if (post.reactions.includes(loggedUser)) {
-      post.reactions = post.reactions.filter(
-        (reaction) => reaction.toString() !== loggedUser
-      );
-      post.likeCount--;
-      message = "unliked post";
+      
     } else {
       post.reactions = [...post.reactions, loggedUser];
       post.likeCount++;
-      message = "liked post";
     }
 
     await post.save();
 
-    res.status(200).json({ message });
+    res.status(200).send("successful");
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+const unlikePost = async (req, res) => {
+  try {
+    const { postId } = req.params;
+    const loggedUser = req.user;
+
+    const post = await Post.findById(postId);
+
+    post.reactions = post.reactions.filter(
+      (reaction) => reaction.toString() !== loggedUser
+    );
+    post.likeCount--;
+
+    await post.save();
+
+    res.status(200).send("successful");
+
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -142,5 +159,6 @@ module.exports = {
   getPostById,
   getPosts,
   getPostsOfUser,
-  reaction,
+  likePost,
+  unlikePost
 };
