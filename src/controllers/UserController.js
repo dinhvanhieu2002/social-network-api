@@ -26,6 +26,7 @@ const signup = async (req, res) => {
       user.username = password ? username : nonAccentVietnamese.toLowerCaseNonAccentVietnamese(fullName).split(" ").join("");
       user.fullName = fullName;
       user.email = email;
+      user.bio = "",
       user.avatar = (avatar === "" || !avatar) ? "https://res.cloudinary.com/dgvb3ulgi/image/upload/v1673277818/avatars/no-avatar_l8c2wl.png" : avatar;
       if(password) {
         user.setPassword(password);
@@ -68,12 +69,13 @@ const signin = async (req, res) => {
 
 const updateProfile = async (req, res) => {
   try {
-    const { username, fullName, avatar } = req.body
+    const { username, fullName, avatar, bio } = req.body
 
     const user = await User.findById(req.user);
     user.username = username;
     user.fullName = fullName;
     user.avatar = avatar;
+    user.bio = bio;
 
     const updatedUser = await user.save()
 

@@ -82,6 +82,19 @@ const getPosts = async (req, res) => {
   }
 };
 
+const getPostById = async (req, res) => {
+  try {
+    const post = Post.findById(req.params.postId)
+
+    if (!post)
+      return res.status(404).json({ message: "cannot find any post" });
+
+    return res.status(200).json(post);
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+};
+
 const getPostsOfUser = async (req, res) => {
   try {
     const { userId } = req.params;
@@ -126,6 +139,7 @@ module.exports = {
   create,
   remove,
   update,
+  getPostById,
   getPosts,
   getPostsOfUser,
   reaction,
