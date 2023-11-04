@@ -32,12 +32,15 @@ const signup = async (req, res) => {
         user.setPassword(password);
       }
       user = await user.save();
+      const token = jwt.sign({ id: user._id }, process.env.TOKEN_SECRET);
+
+      return res.status(200).json({user, token });
     }
 
 
-    const token = jwt.sign({ id: user._id }, process.env.TOKEN_SECRET);
+    const token = jwt.sign({ id: existingEmail._id }, process.env.TOKEN_SECRET);
 
-    res.json({user, token });
+    res.status(200).json({user: existingEmail, token });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
