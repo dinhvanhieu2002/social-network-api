@@ -84,7 +84,7 @@ const getPosts = async (req, res) => {
 
 const getPostById = async (req, res) => {
   try {
-    const post = Post.findById(req.params.postId)
+    const post = await Post.findById(req.params.postId)
 
     if (!post)
       return res.status(404).json({ message: "cannot find any post" });
