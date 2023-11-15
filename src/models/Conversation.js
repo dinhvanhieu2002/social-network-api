@@ -14,7 +14,6 @@ const conversationSchema = new mongoose.Schema({
         ref: 'User'
       }
     ],
-    createdAt: { type: Date, default: Date.now()}
 }, modelOptions)
 
 module.exports = mongoose.model('Conversation', conversationSchema)
