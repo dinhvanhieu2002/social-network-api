@@ -4,6 +4,7 @@ const auth = require('../middlewares/auth')
 
 //done
 router.post("/", auth, messageController.create);
-router.get("/:conversationId", auth, messageController.getMessagesOfConversation);
+router.get("/conversation/:conversationId", auth, messageController.getMessagesOfConversation);
+router.get("/:messageId", auth, messageController.getMessageById);
 
 module.exports = router;

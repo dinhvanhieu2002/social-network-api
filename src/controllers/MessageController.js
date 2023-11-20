@@ -30,4 +30,14 @@ const getMessagesOfConversation = async (req, res) => {
   }
 };
 
-module.exports = { create, getMessagesOfConversation };
+const getMessageById = async (req, res) => {
+  try {
+    const { messageId } = req.params;
+    const message = await Message.findById(messageId);
+    res.status(200).json(message);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+module.exports = { create, getMessagesOfConversation, getMessageById };
