@@ -66,4 +66,34 @@ const getList = async (req, res) => {
   }
 };
 
-module.exports = { create, update, remove, getList };
+const getConversationById = async (req, res) => {
+  const { conversationId } = req.params;
+  try {
+    const conversation = await Conversation.findById(conversationId);
+    if (!conversation)
+      return res.status(404).json({ message: "no conversation is gotten" });
+    
+    res.status(200).json(conversation);
+
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+const getConversationByUsers = async (req, res) => {
+  const { userId } = req.params;
+  try {
+    const conversation = await Conversation.find({
+      users: { $in: [req.user, userId] },
+    });
+    if (!conversation)
+      return res.status(404).json({ message: "no conversation is gotten" });
+    
+    res.status(200).json(conversation);
+
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+module.exports = { create, update, remove, getList, getConversationById, getConversationByUsers };
