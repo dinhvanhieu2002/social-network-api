@@ -31,13 +31,10 @@ module.exports = (io) => {
       io.emit("getUsers", users);
     });
 
-    client.on("sendMessage", ({ senderId, receiverId, text, image }) => {
-      const user = getUser(receiverId);
-      io.to(user?.socketId).emit("getMessage", {
-        senderId,
-        text,
-        image
-      });
+    client.on("sendMessage", (data) => {
+      const jsonData = JSON.parse(data);
+      const user = getUser(jsonData['receivedId']);
+      io.to(user?.socketId).emit("getMessage", data);
     });
     
   });
