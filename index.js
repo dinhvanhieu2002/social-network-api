@@ -4,17 +4,19 @@ const app = express();
 const cors = require("cors");
 const http = require("http");
 const mongoose = require("mongoose");
-const { Server } = require("socket.io");
+// const { Server } = require("socket.io");
 
 const config = require("./src/utils/config");
 const routes = require("./src/routes");
 
 const server = http.createServer(app);
-const io = new Server(server, {
-  cors: {
-    origin: "https://localhost:3000",
-  },
-});
+const io = require("socket.io")(server);
+
+// const io = new Server(server, {
+//   cors: {
+//     origin: "https://localhost:3000",
+//   },
+// });
 require("./src/controllers/ChatController")(io);
 
 app.use(cors());
