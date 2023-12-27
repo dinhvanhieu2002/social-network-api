@@ -84,7 +84,7 @@ const getConversationByUsers = async (req, res) => {
   const { userId } = req.params;
   try {
     const conversation = await Conversation.find({
-      users: { $in: [req.user, userId] },
+      users: { $all: [req.user, userId] },
     });
     if (!conversation)
       return res.status(404).json({ message: "no conversation is gotten" });
