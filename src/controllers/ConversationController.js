@@ -83,7 +83,7 @@ const getConversationById = async (req, res) => {
 const getConversationByUsers = async (req, res) => {
   const { userId } = req.params;
   try {
-    const conversation = await Conversation.find({
+    const conversation = await Conversation.findOne({
       users: { $all: [req.user, userId] },
     });
     if (!conversation)
